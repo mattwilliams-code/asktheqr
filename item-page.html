@@ -1,5 +1,371 @@
-# netlify.toml
-[[redirects]]
-  from = "/items/*"
-  to = "/item-page.html"
-  status = 200
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Item Details</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f8f8f6;
+      --surface: #ffffff;
+      --border: rgba(0,0,0,0.1);
+      --text-primary: #1a1a18;
+      --text-secondary: #5f5e5a;
+      --text-muted: #888780;
+      --accent: #185fa5;
+      --accent-bg: #e6f1fb;
+      --accent-text: #0c447c;
+      --success-bg: #eaf3de;
+      --success-text: #3b6d11;
+      --danger-bg: #fcebeb;
+      --danger-text: #a32d2d;
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1c1c1a;
+        --surface: #262624;
+        --border: rgba(255,255,255,0.1);
+        --text-primary: #f0ede8;
+        --text-secondary: #b4b2a9;
+        --text-muted: #888780;
+        --accent: #378add;
+        --accent-bg: #042c53;
+        --accent-text: #b5d4f4;
+        --success-bg: #173404;
+        --success-text: #c0dd97;
+        --danger-bg: #501313;
+        --danger-text: #f7c1c1;
+      }
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--surface);
+      border-bottom: 0.5px solid var(--border);
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .brand {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .header-ref {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-left: auto;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+
+    main {
+      max-width: 620px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 4rem;
+    }
+
+    .state-card {
+      background: var(--surface);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 3rem 2rem;
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .spinner {
+      width: 28px;
+      height: 28px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .state-title { font-size: 15px; font-weight: 500; margin-bottom: 0.4rem; }
+    .state-sub { font-size: 14px; color: var(--text-secondary); }
+
+    .item-wrap { display: none; }
+
+    .banner {
+      border-radius: var(--radius-sm);
+      padding: 0.9rem 1.1rem;
+      font-size: 14px;
+      margin-bottom: 1.5rem;
+      display: none;
+      background: var(--danger-bg);
+      color: var(--danger-text);
+      border: 0.5px solid var(--danger-text);
+    }
+
+    .item-name {
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 1.25;
+      margin-bottom: 0.4rem;
+    }
+
+    .item-ref {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      margin-bottom: 1.75rem;
+    }
+
+    /* Section cards */
+    .section {
+      background: var(--surface);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .section-heading {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 0.75rem 1.25rem 0;
+    }
+
+    .detail-row {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 0.8rem 1.25rem;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .detail-row:last-child { border-bottom: none; }
+
+    .detail-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      min-width: 100px;
+      flex-shrink: 0;
+    }
+
+    .detail-value {
+      font-size: 14px;
+      color: var(--text-primary);
+      word-break: break-word;
+    }
+
+    .note-box {
+      background: var(--surface);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .note-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1.25rem;
+      font-size: 12px;
+      color: var(--text-muted);
+      border-top: 0.5px solid var(--border);
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <span class="brand"><!-- asktheqr --></span>
+  <span class="header-ref" id="header-ref"></span>
+</header>
+
+<main>
+
+  <div class="state-card" id="state-loading">
+    <div class="spinner"></div>
+    <p class="state-title">Loading details</p>
+    <p class="state-sub">Just a moment&hellip;</p>
+  </div>
+
+  <div class="state-card" id="state-error" style="display:none;">
+    <p class="state-title" style="color:var(--danger-text);">Item not found</p>
+    <p class="state-sub" id="error-message">This reference does not match any record.</p>
+  </div>
+
+  <div class="item-wrap" id="item-content">
+
+    <div class="banner" id="banner-discontinued">
+      This item has been discontinued and may no longer be available.
+    </div>
+
+    <h1 class="item-name" id="item-name"></h1>
+    <p class="item-ref" id="item-ref"></p>
+
+    <!-- Contact details -->
+    <div class="section">
+      <p class="section-heading">Contact</p>
+      <div class="detail-row">
+        <span class="detail-label">Name</span>
+        <span class="detail-value" id="val-contact-name"></span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Phone</span>
+        <span class="detail-value" id="val-phone"></span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Email</span>
+        <span class="detail-value" id="val-email"></span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Address</span>
+        <span class="detail-value" id="val-address"></span>
+      </div>
+    </div>
+
+    <!-- School details -->
+    <div class="section">
+      <p class="section-heading">School</p>
+      <div class="detail-row">
+        <span class="detail-label">School</span>
+        <span class="detail-value" id="val-school"></span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Class</span>
+        <span class="detail-value" id="val-class"></span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Teacher</span>
+        <span class="detail-value" id="val-teacher"></span>
+      </div>
+    </div>
+
+    <!-- Note -->
+    <div class="note-box" id="note-box" style="display:none;">
+      <p class="note-label">Note</p>
+      <p id="val-note"></p>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  Scan the QR code on your item to return to this page.
+</footer>
+
+<script>
+  // ── CONFIG — replace these two values ────────────────────────────────────
+  const SUPABASE_URL     = 'https://https://supabase.com/dashboard/project/hqqkbfmvfzpjxiavhlol';
+  const SUPABASE_ANON_KEY = 'sb_publishable_vwiKY3UFUniNZ85b0QjqJw__0klefkA';
+  // ─────────────────────────────────────────────────────────────────────────
+
+  function getReferenceFromURL() {
+    const parts = window.location.pathname.split('/').filter(Boolean);
+    if (parts.length >= 2) return parts[parts.length - 1];
+    return new URLSearchParams(window.location.search).get('ref');
+  }
+
+  function set(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value || '—';
+  }
+
+  async function loadItem() {
+    const ref = getReferenceFromURL();
+
+    if (!ref) { showError('No item reference was provided in the URL.'); return; }
+
+    document.getElementById('header-ref').textContent = ref;
+
+    try {
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/items?reference_id=eq.${encodeURIComponent(ref)}&limit=1`,
+        {
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+            'Accept': 'application/json'
+          }
+        }
+      );
+
+      if (!res.ok) throw new Error(`API error ${res.status}`);
+      const data = await res.json();
+
+      if (!data || data.length === 0) {
+        showError('No item with this reference ID exists in our records.');
+        return;
+      }
+
+      renderItem(data[0]);
+
+    } catch (err) {
+      showError('Could not load details. Please try again later.');
+      console.error(err);
+    }
+  }
+
+  function renderItem(item) {
+    document.title = item.name || item.reference_id;
+
+    document.getElementById('item-name').textContent = item.name || 'Unnamed item';
+    document.getElementById('item-ref').textContent  = item.reference_id;
+
+    if (item.status && item.status.toLowerCase() === 'discontinued') {
+      document.getElementById('banner-discontinued').style.display = 'block';
+    }
+
+    set('val-contact-name', item.contact_name);
+    set('val-phone',        item.phone_no);
+    set('val-email',        item.email);
+    set('val-address',      item.address);
+    set('val-school',       item.school);
+    set('val-class',        item.class);
+    set('val-teacher',      item.teacher);
+
+    if (item.note) {
+      document.getElementById('val-note').textContent = item.note;
+      document.getElementById('note-box').style.display = 'block';
+    }
+
+    document.getElementById('state-loading').style.display = 'none';
+    document.getElementById('item-content').style.display  = 'block';
+  }
+
+  function showError(msg) {
+    document.getElementById('state-loading').style.display = 'none';
+    document.getElementById('error-message').textContent   = msg;
+    document.getElementById('state-error').style.display   = 'block';
+  }
+
+  loadItem();
+</script>
+
+</body>
+</html>
