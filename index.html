@@ -537,6 +537,380 @@
       .shop-hero h1 { font-size: 30px; }
       .qr-deco { display: none; }
     }
+
+    /* ── Shop styles ── */
+    .shop-intro {
+      max-width: 580px;
+      margin: 0 auto 2.5rem;
+      text-align: center;
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .product-card {
+      background: var(--white);
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 14px;
+      padding: 1.75rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .product-card--featured {
+      border: 2px solid var(--navy);
+      box-shadow: 0 8px 30px rgba(30,77,140,0.12);
+    }
+
+    .product-badge {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .product-badge--featured {
+      color: var(--navy);
+    }
+
+    .product-qty {
+      font-family: 'Syne', sans-serif;
+      font-size: 52px;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1;
+    }
+
+    .product-unit {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .product-price {
+      font-family: 'Syne', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 1.25rem;
+    }
+
+    .product-features {
+      list-style: none;
+      margin-bottom: 1.5rem;
+      flex: 1;
+    }
+
+    .product-features li {
+      font-size: 13px;
+      color: var(--muted);
+      padding: 0.35rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      padding-left: 1.1rem;
+      position: relative;
+    }
+
+    .product-features li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--amber);
+      font-weight: 700;
+      font-size: 11px;
+    }
+
+    .product-features li:last-child { border-bottom: none; }
+
+    .product-cta {
+      background: var(--off);
+      color: var(--navy);
+      border: 1.5px solid rgba(0,0,0,0.1);
+      border-radius: 8px;
+      padding: 0.7rem 1rem;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .product-cta:hover {
+      background: var(--navy);
+      color: var(--white);
+      border-color: var(--navy);
+    }
+
+    .product-cta--featured {
+      background: var(--navy);
+      color: var(--white);
+      border-color: var(--navy);
+    }
+
+    .product-cta--featured:hover {
+      background: var(--amber);
+      color: var(--navy);
+      border-color: var(--amber);
+    }
+
+    /* Order form */
+    .back-btn {
+      background: none;
+      border: none;
+      color: var(--navy);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 0;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'Inter', sans-serif;
+      opacity: 0.7;
+      transition: opacity 0.15s;
+    }
+
+    .back-btn:hover { opacity: 1; }
+
+    .order-wrap {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 2rem;
+      max-width: 860px;
+      margin: 0 auto;
+      align-items: start;
+    }
+
+    .order-summary {
+      background: var(--navy);
+      border-radius: 14px;
+      padding: 1.5rem;
+      position: sticky;
+      top: 1.5rem;
+    }
+
+    .order-summary-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 0.75rem;
+    }
+
+    .order-product-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.25rem;
+    }
+
+    .order-product-price {
+      font-family: 'Syne', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--amber);
+      margin-bottom: 1.25rem;
+    }
+
+    .order-summary-detail {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .order-summary-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--white);
+      padding-top: 0.75rem;
+      margin-top: 0.25rem;
+    }
+
+    .order-form {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 2rem;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .form-heading {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.3rem;
+    }
+
+    .form-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--navy);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-optional {
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      border: 1.5px solid rgba(0,0,0,0.12);
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      color: var(--navy);
+      background: var(--off);
+      transition: border-color 0.15s;
+      outline: none;
+    }
+
+    .form-input:focus {
+      border-color: var(--navy);
+      background: var(--white);
+    }
+
+    .form-textarea {
+      height: 80px;
+      resize: vertical;
+    }
+
+    .form-hint {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 0.35rem;
+    }
+
+    .form-error {
+      background: #fcebeb;
+      color: #a32d2d;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-size: 13px;
+      margin-bottom: 1rem;
+    }
+
+    .checkout-btn {
+      width: 100%;
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      border-radius: 10px;
+      padding: 0.9rem 1.5rem;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: background 0.15s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .checkout-btn:hover {
+      background: var(--amber);
+      color: var(--navy);
+      transform: translateY(-1px);
+    }
+
+    .checkout-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .checkout-note {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* Success */
+    .success-box {
+      background: var(--white);
+      border-radius: 16px;
+      border: 1px solid rgba(0,0,0,0.06);
+      padding: 4rem 2rem;
+      text-align: center;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .success-icon {
+      width: 56px;
+      height: 56px;
+      background: #eaf3de;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+    }
+
+    .success-icon svg {
+      width: 26px;
+      height: 26px;
+      stroke: #3b6d11;
+    }
+
+    .success-box h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.6rem;
+    }
+
+    .success-box p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .product-grid { grid-template-columns: 1fr; max-width: 360px; }
+      .order-wrap { grid-template-columns: 1fr; }
+      .order-summary { position: static; }
+      .form-row { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -668,17 +1042,136 @@
       <div class="shop-hero-bg"></div>
       <div class="shop-hero-content">
         <h1>Shop</h1>
-        <p>Browse our range of QR labelling packages and services.</p>
+        <p>Personalised QR labels — printed with a name and unique QR code, delivered to your door.</p>
       </div>
     </div>
 
-    <div class="shop-content">
-      <div class="coming-soon">
-        <div class="coming-soon-icon">
-          <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+    <!-- Product catalogue -->
+    <div class="shop-content" id="shop-catalogue">
+      <div class="shop-intro">
+        <p>Each label is printed with a <strong>unique QR code</strong> and the <strong>recipient's name</strong>. Simply scan to see full item details instantly. Choose the pack size that suits you.</p>
+      </div>
+      <div class="product-grid">
+
+        <div class="product-card">
+          <div class="product-badge">Starter</div>
+          <div class="product-qty">15</div>
+          <div class="product-unit">labels</div>
+          <div class="product-price">&#163;<span class="price-val">9.99</span></div>
+          <ul class="product-features">
+            <li>Personalised name on each label</li>
+            <li>Unique QR code per label</li>
+            <li>Waterproof vinyl finish</li>
+            <li>Delivered within 5 working days</li>
+          </ul>
+          <button class="product-cta" onclick="openOrder('Starter Pack &mdash; 15 Labels', 999, 15)">Order now &rarr;</button>
         </div>
-        <h2>Coming soon</h2>
-        <p>We're putting the finishing touches on our shop. Check back shortly to explore our QR labelling packages.</p>
+
+        <div class="product-card product-card--featured">
+          <div class="product-badge product-badge--featured">Most popular</div>
+          <div class="product-qty">30</div>
+          <div class="product-unit">labels</div>
+          <div class="product-price">&#163;<span class="price-val">17.99</span></div>
+          <ul class="product-features">
+            <li>Personalised name on each label</li>
+            <li>Unique QR code per label</li>
+            <li>Waterproof vinyl finish</li>
+            <li>Delivered within 5 working days</li>
+          </ul>
+          <button class="product-cta product-cta--featured" onclick="openOrder('Standard Pack &mdash; 30 Labels', 1799, 30)">Order now &rarr;</button>
+        </div>
+
+        <div class="product-card">
+          <div class="product-badge">Value</div>
+          <div class="product-qty">50</div>
+          <div class="product-unit">labels</div>
+          <div class="product-price">&#163;<span class="price-val">27.99</span></div>
+          <ul class="product-features">
+            <li>Personalised name on each label</li>
+            <li>Unique QR code per label</li>
+            <li>Waterproof vinyl finish</li>
+            <li>Delivered within 5 working days</li>
+          </ul>
+          <button class="product-cta" onclick="openOrder('Value Pack &mdash; 50 Labels', 2799, 50)">Order now &rarr;</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Order form -->
+    <div class="shop-content" id="shop-order" style="display:none;">
+      <button class="back-btn" onclick="showCatalogue()">&larr; Back to packages</button>
+      <div class="order-wrap">
+        <div class="order-summary">
+          <p class="order-summary-label">Your order</p>
+          <p class="order-product-name" id="order-product-name"></p>
+          <p class="order-product-price" id="order-product-price"></p>
+          <div class="order-summary-detail"><span>Personalised QR labels</span><span id="order-qty-display"></span></div>
+          <div class="order-summary-detail"><span>Delivery</span><span>Included</span></div>
+          <div class="order-summary-total"><span>Total</span><span id="order-total-display"></span></div>
+        </div>
+        <div class="order-form">
+          <p class="form-heading">Your details</p>
+          <p class="form-sub">We'll use these to personalise your labels and send your order confirmation.</p>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First name</label>
+              <input class="form-input" type="text" id="f-firstname" placeholder="Jane" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last name</label>
+              <input class="form-input" type="text" id="f-lastname" placeholder="Smith" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email address</label>
+            <input class="form-input" type="email" id="f-email" placeholder="jane@example.com" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone number</label>
+            <input class="form-input" type="tel" id="f-phone" placeholder="07700 900123" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Delivery address</label>
+            <input class="form-input" type="text" id="f-address" placeholder="123 Example Street" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Town / City</label>
+              <input class="form-input" type="text" id="f-city" placeholder="Birmingham" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Postcode</label>
+              <input class="form-input" type="text" id="f-postcode" placeholder="B1 1AA" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Name to print on labels</label>
+            <input class="form-input" type="text" id="f-labelname" placeholder="e.g. J. Smith" />
+            <p class="form-hint">This is the name that will appear printed on every label.</p>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Additional notes <span class="form-optional">(optional)</span></label>
+            <textarea class="form-input form-textarea" id="f-notes" placeholder="Any special requirements..."></textarea>
+          </div>
+          <div class="form-error" id="form-error" style="display:none;"></div>
+          <button class="checkout-btn" id="checkout-btn" onclick="proceedToCheckout()">
+            Proceed to payment
+          </button>
+          <p class="checkout-note">You'll be taken to Stripe's secure payment page. We never store your card details.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success -->
+    <div class="shop-content" id="shop-success" style="display:none;">
+      <div class="success-box">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h2>Order received!</h2>
+        <p>Thank you for your order. You'll receive a confirmation email shortly, and your personalised QR labels will be with you within 5 working days.</p>
+        <button class="hero-cta" style="margin-top:1.5rem;" onclick="showCatalogue()">Order again</button>
       </div>
     </div>
 
@@ -739,6 +1232,107 @@
     }
     deco.appendChild(cell);
   });
+
+  // ── Shop state ────────────────────────────────────────────────────────────
+  let currentOrder = {};
+
+  function openOrder(productName, priceInPence, qty) {
+    currentOrder = { productName, priceInPence, qty };
+    const pounds = (priceInPence / 100).toFixed(2);
+    document.getElementById('order-product-name').textContent = productName;
+    document.getElementById('order-product-price').textContent = '£' + pounds;
+    document.getElementById('order-qty-display').textContent = qty + ' labels';
+    document.getElementById('order-total-display').textContent = '£' + pounds;
+    document.getElementById('shop-catalogue').style.display = 'none';
+    document.getElementById('shop-order').style.display = 'block';
+    document.getElementById('shop-success').style.display = 'none';
+    window.scrollTo(0, 0);
+  }
+
+  function showCatalogue() {
+    document.getElementById('shop-catalogue').style.display = 'block';
+    document.getElementById('shop-order').style.display = 'none';
+    document.getElementById('shop-success').style.display = 'none';
+    window.scrollTo(0, 0);
+  }
+
+  function validateForm() {
+    const required = {
+      'f-firstname': 'First name',
+      'f-lastname':  'Last name',
+      'f-email':     'Email address',
+      'f-phone':     'Phone number',
+      'f-address':   'Delivery address',
+      'f-city':      'Town / City',
+      'f-postcode':  'Postcode',
+      'f-labelname': 'Name to print on labels',
+    };
+    for (const [id, label] of Object.entries(required)) {
+      if (!document.getElementById(id).value.trim()) {
+        return label + ' is required.';
+      }
+    }
+    const email = document.getElementById('f-email').value;
+    if (!/^[^@]+@[^@]+\.[^@]+$/.test(email)) return 'Please enter a valid email address.';
+    return null;
+  }
+
+  async function proceedToCheckout() {
+    const err = validateForm();
+    const errEl = document.getElementById('form-error');
+    if (err) {
+      errEl.textContent = err;
+      errEl.style.display = 'block';
+      return;
+    }
+    errEl.style.display = 'none';
+
+    const btn = document.getElementById('checkout-btn');
+    btn.disabled = true;
+    btn.textContent = 'Redirecting to payment...';
+
+    const orderData = {
+      productName:  currentOrder.productName,
+      price:        currentOrder.priceInPence,
+      quantity:     currentOrder.qty,
+      customerEmail: document.getElementById('f-email').value.trim(),
+      customerName:  document.getElementById('f-firstname').value.trim() + ' ' + document.getElementById('f-lastname').value.trim(),
+      phone:         document.getElementById('f-phone').value.trim(),
+      address:       document.getElementById('f-address').value.trim() + ', ' + document.getElementById('f-city').value.trim() + ', ' + document.getElementById('f-postcode').value.trim(),
+      labelName:     document.getElementById('f-labelname').value.trim(),
+      notes:         document.getElementById('f-notes').value.trim(),
+    };
+
+    try {
+      const res = await fetch('/.netlify/functions/create-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderData)
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error(data.error || 'No checkout URL returned');
+      }
+    } catch (e) {
+      errEl.textContent = 'Something went wrong. Please try again or contact us.';
+      errEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Proceed to payment';
+    }
+  }
+
+  // Show success page if redirected back from Stripe
+  if (window.location.search.includes('success=true')) {
+    showPage('shop', document.querySelectorAll('.nav-link')[1]);
+    setTimeout(() => {
+      document.getElementById('shop-catalogue').style.display = 'none';
+      document.getElementById('shop-order').style.display = 'none';
+      document.getElementById('shop-success').style.display = 'block';
+    }, 100);
+  }
+
 </script>
 
 </body>
