@@ -1,6 +1,9 @@
 [build]
   functions = "netlify/functions"
 
+[build.environment]
+  SECRETS_SCAN_OMIT_PATHS = "item-page.html"
+
 [[redirects]]
   from = "/items/*"
   to = "/item-page.html"
