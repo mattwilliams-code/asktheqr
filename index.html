@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>asktheqr</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #1e4d8c;
+      --navy2:  #2a5fa3;
+      --amber:  #f59e0b;
+      --amber2: #fbbf24;
+      --white:  #ffffff;
+      --off:    #f5f7fa;
+      --muted:  #6b7280;
+      --border: rgba(255,255,255,0.08);
+      --sidebar-w: 220px;
+    }
+
+    html, body { height: 100%; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--off);
+      color: var(--navy);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--navy);
+      min-height: 100vh;
+      position: fixed;
+      top: 0; left: 0;
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar-logo {
+      padding: 2rem 1.5rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo-text {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 22px;
+      color: var(--white);
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .logo-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      background: var(--amber);
+      border-radius: 2px;
+      margin-left: 3px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-tagline {
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      margin-top: 4px;
+      letter-spacing: 0.02em;
+    }
+
+    nav {
+      padding: 1.5rem 0;
+      flex: 1;
+    }
+
+    .nav-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      padding: 0 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.65rem 1.5rem;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.15s;
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+    }
+
+    .nav-link:hover {
+      color: var(--white);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .nav-link.active {
+      color: var(--amber);
+      background: rgba(245,158,11,0.1);
+    }
+
+    .nav-link .nav-icon {
+      width: 16px;
+      height: 16px;
+      opacity: 0.7;
+      flex-shrink: 0;
+    }
+
+    .nav-link.active .nav-icon { opacity: 1; }
+
+    .sidebar-footer {
+      padding: 1.25rem 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* ── Mobile header ── */
+    .mobile-header {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 56px;
+      background: var(--navy);
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.25rem;
+      z-index: 200;
+    }
+
+    .mobile-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--white);
+    }
+
+    .hamburger {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: all 0.25s;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 99;
+    }
+
+    .overlay.show { display: block; }
+
+    /* ── Main content ── */
+    .main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      min-height: 100vh;
+    }
+
+    /* ── Pages ── */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* ── HOME PAGE ── */
+    .hero {
+      background: var(--navy);
+      padding: 5rem 4rem 4rem;
+      position: relative;
+      overflow: hidden;
+      min-height: 480px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    /* QR grid background */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      opacity: 0.04;
+      background-image:
+        repeating-linear-gradient(0deg, #fff 0px, #fff 1px, transparent 1px, transparent 20px),
+        repeating-linear-gradient(90deg, #fff 0px, #fff 1px, transparent 1px, transparent 20px);
+      background-size: 20px 20px;
+    }
+
+    /* Animated QR squares */
+    .qr-deco {
+      position: absolute;
+      top: 2.5rem;
+      right: 3rem;
+      display: grid;
+      grid-template-columns: repeat(7, 14px);
+      gap: 3px;
+    }
+
+    .qr-cell {
+      width: 14px;
+      height: 14px;
+      border-radius: 2px;
+      background: var(--amber);
+      opacity: 0;
+      animation: qrfade 2.4s ease forwards;
+    }
+
+    @keyframes qrfade {
+      0%   { opacity: 0; transform: scale(0.5); }
+      60%  { opacity: 0.9; transform: scale(1); }
+      100% { opacity: 0.6; }
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1rem;
+    }
+
+    .hero-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(36px, 5vw, 58px);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.1;
+      letter-spacing: -1px;
+      margin-bottom: 1.25rem;
+      max-width: 560px;
+    }
+
+    .hero-title em {
+      font-style: normal;
+      color: var(--amber);
+    }
+
+    .hero-body {
+      font-size: 16px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.6);
+      max-width: 480px;
+      margin-bottom: 2rem;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--amber);
+      color: var(--navy);
+      font-weight: 600;
+      font-size: 14px;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      border: none;
+      transition: background 0.15s, transform 0.1s;
+      text-decoration: none;
+    }
+
+    .hero-cta:hover {
+      background: var(--amber2);
+      transform: translateY(-1px);
+    }
+
+    /* How it works */
+    .section {
+      padding: 3.5rem 4rem;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-heading {
+      font-family: 'Syne', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 2.5rem;
+      letter-spacing: -0.5px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .step {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 1.75rem;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .step-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--amber);
+      margin-bottom: 1rem;
+    }
+
+    .step-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--navy);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .step-icon svg { width: 18px; height: 18px; stroke: var(--amber); fill: none; stroke-width: 1.5; }
+
+    .step h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+
+    .step p {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    /* About strip */
+    .about-strip {
+      background: var(--navy);
+      padding: 3.5rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .about-strip h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.5px;
+      margin-bottom: 1rem;
+    }
+
+    .about-strip p {
+      font-size: 14px;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .stat {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+    }
+
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--amber);
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ── SHOP PAGE ── */
+    .shop-hero {
+      background: var(--navy);
+      padding: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .shop-hero-bg {
+      position: absolute;
+      inset: 0;
+      opacity: 0.04;
+      background-image:
+        repeating-linear-gradient(0deg, #fff 0px, #fff 1px, transparent 1px, transparent 20px),
+        repeating-linear-gradient(90deg, #fff 0px, #fff 1px, transparent 1px, transparent 20px);
+      background-size: 20px 20px;
+    }
+
+    .shop-hero-content { position: relative; }
+
+    .shop-hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 42px;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -1px;
+      margin-bottom: 0.75rem;
+    }
+
+    .shop-hero p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.5);
+      max-width: 420px;
+    }
+
+    .shop-content {
+      padding: 3.5rem 4rem;
+    }
+
+    .coming-soon {
+      background: var(--white);
+      border-radius: 16px;
+      border: 2px dashed rgba(0,0,0,0.1);
+      padding: 4rem 2rem;
+      text-align: center;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .coming-soon-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--navy);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+    }
+
+    .coming-soon-icon svg { width: 26px; height: 26px; stroke: var(--amber); fill: none; stroke-width: 1.5; }
+
+    .coming-soon h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.6rem;
+    }
+
+    .coming-soon p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .mobile-header {
+        display: flex;
+      }
+
+      .main {
+        margin-left: 0;
+        padding-top: 56px;
+      }
+
+      .hero, .section, .about-strip, .shop-hero, .shop-content {
+        padding: 2.5rem 1.5rem;
+      }
+
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .about-strip {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .hero-title { font-size: 34px; }
+      .shop-hero h1 { font-size: 30px; }
+      .qr-deco { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Mobile header -->
+<div class="mobile-header">
+  <span class="mobile-logo">asktheqr</span>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-text">asktheqr<span class="logo-dot"></span></div>
+    <div class="sidebar-tagline">Instant item information</div>
+  </div>
+
+  <nav>
+    <div class="nav-label">Menu</div>
+    <button class="nav-link active" onclick="showPage('home', this)">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      Home
+    </button>
+    <button class="nav-link" onclick="showPage('shop', this)">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+      </svg>
+      Shop
+    </button>
+  </nav>
+
+  <div class="sidebar-footer">© 2026 asktheqr</div>
+</aside>
+
+<!-- Main -->
+<div class="main">
+
+  <!-- HOME PAGE -->
+  <div class="page active" id="page-home">
+
+    <div class="hero">
+      <div class="hero-bg"></div>
+
+      <!-- Decorative QR cells -->
+      <div class="qr-deco" id="qr-deco"></div>
+
+      <div style="position:relative;">
+        <p class="hero-eyebrow">Scan · Discover · Know</p>
+        <h1 class="hero-title">Every item tells a story.<br><em>Yours is one scan away.</em></h1>
+        <p class="hero-body">asktheqr links physical items to instant digital information. Attach a QR code, scan it, get everything you need — no apps, no friction, no guesswork.</p>
+        <button class="hero-cta" onclick="showPage('shop', document.querySelector('.nav-link:nth-child(2)'))">
+          Visit the Shop
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="section">
+      <p class="section-title">How it works</p>
+      <h2 class="section-heading">Simple from the start</h2>
+
+      <div class="steps">
+        <div class="step">
+          <p class="step-num">01</p>
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="4" height="4"/></svg>
+          </div>
+          <h3>We generate your QR</h3>
+          <p>Each item gets a unique QR code linked to its own dedicated information page.</p>
+        </div>
+        <div class="step">
+          <p class="step-num">02</p>
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <h3>Attach &amp; send</h3>
+          <p>The QR label is printed and attached to your item before it reaches the customer.</p>
+        </div>
+        <div class="step">
+          <p class="step-num">03</p>
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.49 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.34 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.4a16 16 0 0 0 6 6l.83-.83a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>
+          </div>
+          <h3>Scan &amp; know instantly</h3>
+          <p>Anyone with a phone scans the code and sees all the details they need, instantly.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-strip">
+      <div>
+        <h2>Built for businesses that care about the details</h2>
+        <p>Whether you're sending out school equipment, branded merchandise, or specialist items, asktheqr makes sure the right information is always one scan away — no matter where your items end up.</p>
+      </div>
+      <div class="about-stats">
+        <div class="stat">
+          <div class="stat-num">QR</div>
+          <div class="stat-label">Unique code per item</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">0s</div>
+          <div class="stat-label">App download required</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">24/7</div>
+          <div class="stat-label">Information available</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">∞</div>
+          <div class="stat-label">Items supported</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SHOP PAGE -->
+  <div class="page" id="page-shop">
+
+    <div class="shop-hero">
+      <div class="shop-hero-bg"></div>
+      <div class="shop-hero-content">
+        <h1>Shop</h1>
+        <p>Browse our range of QR labelling packages and services.</p>
+      </div>
+    </div>
+
+    <div class="shop-content">
+      <div class="coming-soon">
+        <div class="coming-soon-icon">
+          <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        </div>
+        <h2>Coming soon</h2>
+        <p>We're putting the finishing touches on our shop. Check back shortly to explore our QR labelling packages.</p>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  // ── Page switching ────────────────────────────────────────────────────────
+  function showPage(id, navEl) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    if (navEl) navEl.classList.add('active');
+    closeSidebar();
+    window.scrollTo(0, 0);
+  }
+
+  // ── Mobile sidebar ────────────────────────────────────────────────────────
+  const hamburger = document.getElementById('hamburger');
+  const sidebar   = document.getElementById('sidebar');
+  const overlay   = document.getElementById('overlay');
+
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    hamburger.classList.remove('open');
+    overlay.classList.remove('show');
+  }
+
+  hamburger.addEventListener('click', () => {
+    const open = sidebar.classList.toggle('open');
+    hamburger.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+  });
+
+  overlay.addEventListener('click', closeSidebar);
+
+  // ── QR decoration ────────────────────────────────────────────────────────
+  const qrPattern = [
+    1,1,1,0,1,1,1,
+    1,0,1,0,1,0,1,
+    1,1,1,0,0,1,0,
+    0,1,0,0,1,0,1,
+    1,1,1,0,1,1,1,
+    1,0,1,0,0,1,0,
+    1,1,1,0,1,0,1,
+  ];
+
+  const deco = document.getElementById('qr-deco');
+  qrPattern.forEach((on, i) => {
+    const cell = document.createElement('div');
+    cell.className = 'qr-cell';
+    if (on) {
+      cell.style.animationDelay = (i * 0.04) + 's';
+    } else {
+      cell.style.opacity = '0';
+      cell.style.animation = 'none';
+    }
+    deco.appendChild(cell);
+  });
+</script>
+
+</body>
+</html>
