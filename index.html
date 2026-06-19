@@ -5,26 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>asktheqr</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --navy:   #1e4d8c;
-      --navy2:  #2a5fa3;
-      --amber:  #f59e0b;
-      --amber2: #fbbf24;
+      /* asktheqr brand — warm & friendly
+         navy* = warm near-black ink (dark surfaces), amber* = coral primary accent,
+         gold = sunny secondary (decorative QR cells + figures). */
+      --navy:   #211913;   /* warm ink */
+      --navy2:  #342820;
+      --amber:  #F25C42;   /* coral — primary accent / CTA / active */
+      --amber2: #DA4329;   /* coral hover */
+      --gold:   #F7B12E;   /* warm secondary — QR glow + stat figures */
       --white:  #ffffff;
-      --off:    #f5f7fa;
-      --muted:  #6b7280;
-      --border: rgba(255,255,255,0.08);
+      --off:    #FBF7F4;   /* warm page bg */
+      --muted:  #6E5749;   /* warm muted text */
+      --border: rgba(255,255,255,0.10);
       --sidebar-w: 220px;
     }
 
     html, body { height: 100%; }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Mulish', sans-serif;
       background: var(--off);
       color: var(--navy);
       display: flex;
@@ -50,25 +55,18 @@
     }
 
     .logo-text {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Mulish', sans-serif;
       font-weight: 800;
       font-size: 22px;
       color: var(--white);
       letter-spacing: -0.5px;
       display: flex;
       align-items: center;
-      gap: 2px;
+      gap: 9px;
     }
 
-    .logo-dot {
-      display: inline-block;
-      width: 7px;
-      height: 7px;
-      background: var(--amber);
-      border-radius: 2px;
-      margin-left: 3px;
-      flex-shrink: 0;
-    }
+    .logo-mark { flex-shrink: 0; display: block; }
+    .logo-q { color: var(--amber); }
 
     .sidebar-tagline {
       font-size: 11px;
@@ -149,10 +147,13 @@
     }
 
     .mobile-logo {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Mulish', sans-serif;
       font-weight: 800;
       font-size: 18px;
       color: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 7px;
     }
 
     .hamburger {
@@ -236,7 +237,7 @@
       width: 14px;
       height: 14px;
       border-radius: 2px;
-      background: var(--amber);
+      background: var(--gold);
       opacity: 0;
       animation: qrfade 2.4s ease forwards;
     }
@@ -257,7 +258,7 @@
     }
 
     .hero-title {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Mulish', sans-serif;
       font-size: clamp(36px, 5vw, 58px);
       font-weight: 800;
       color: var(--white);
@@ -307,7 +308,7 @@
     }
 
     .section-title {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Mulish', sans-serif;
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.12em;
@@ -317,7 +318,7 @@
     }
 
     .section-heading {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Mulish', sans-serif;
       font-size: 28px;
       font-weight: 700;
       color: var(--navy);
@@ -339,7 +340,7 @@
     }
 
     .step-num {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Mulish', sans-serif;
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.08em;
@@ -361,7 +362,7 @@
     .step-icon svg { width: 18px; height: 18px; stroke: var(--amber); fill: none; stroke-width: 1.5; }
 
     .step h3 {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Mulish', sans-serif;
       font-size: 16px;
       font-weight: 700;
       color: var(--navy);
@@ -385,7 +386,7 @@
     }
 
     .about-strip h2 {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Mulish', sans-serif;
       font-size: 26px;
       font-weight: 700;
       color: var(--white);
@@ -413,10 +414,10 @@
     }
 
     .stat-num {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Mulish', sans-serif;
       font-size: 28px;
       font-weight: 800;
-      color: var(--amber);
+      color: var(--gold);
       margin-bottom: 0.25rem;
     }
 
@@ -446,7 +447,7 @@
     .shop-hero-content { position: relative; }
 
     .shop-hero h1 {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Mulish', sans-serif;
       font-size: 42px;
       font-weight: 800;
       color: var(--white);
@@ -488,7 +489,7 @@
     .coming-soon-icon svg { width: 26px; height: 26px; stroke: var(--amber); fill: none; stroke-width: 1.5; }
 
     .coming-soon h2 {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Mulish', sans-serif;
       font-size: 22px;
       font-weight: 700;
       color: var(--navy);
@@ -585,7 +586,7 @@
     }
 
     .product-qty {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Mulish', sans-serif;
       font-size: 52px;
       font-weight: 800;
       color: var(--navy);
@@ -599,7 +600,7 @@
     }
 
     .product-price {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Mulish', sans-serif;
       font-size: 26px;
       font-weight: 700;
       color: var(--navy);
@@ -642,7 +643,7 @@
       font-weight: 600;
       cursor: pointer;
       transition: all 0.15s;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Mulish', sans-serif;
     }
 
     .product-cta:hover {
@@ -676,7 +677,7 @@
       display: flex;
       align-items: center;
       gap: 0.4rem;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Mulish', sans-serif;
       opacity: 0.7;
       transition: opacity 0.15s;
     }
@@ -710,7 +711,7 @@
     }
 
     .order-product-name {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Mulish', sans-serif;
       font-size: 17px;
       font-weight: 700;
       color: var(--white);
@@ -718,10 +719,10 @@
     }
 
     .order-product-price {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Mulish', sans-serif;
       font-size: 28px;
       font-weight: 800;
-      color: var(--amber);
+      color: var(--gold);
       margin-bottom: 1.25rem;
     }
 
@@ -752,7 +753,7 @@
     }
 
     .form-heading {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Mulish', sans-serif;
       font-size: 18px;
       font-weight: 700;
       color: var(--navy);
@@ -794,7 +795,7 @@
       border: 1.5px solid rgba(0,0,0,0.12);
       border-radius: 8px;
       font-size: 14px;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Mulish', sans-serif;
       color: var(--navy);
       background: var(--off);
       transition: border-color 0.15s;
@@ -836,7 +837,7 @@
       font-size: 15px;
       font-weight: 600;
       cursor: pointer;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Mulish', sans-serif;
       transition: background 0.15s, transform 0.1s;
       display: flex;
       align-items: center;
@@ -877,7 +878,7 @@
     .success-icon {
       width: 56px;
       height: 56px;
-      background: #eaf3de;
+      background: #DCF1E4;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -888,11 +889,11 @@
     .success-icon svg {
       width: 26px;
       height: 26px;
-      stroke: #3b6d11;
+      stroke: #1E7350;
     }
 
     .success-box h2 {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Mulish', sans-serif;
       font-size: 22px;
       font-weight: 700;
       color: var(--navy);
@@ -917,7 +918,7 @@
 
 <!-- Mobile header -->
 <div class="mobile-header">
-  <span class="mobile-logo">asktheqr</span>
+  <span class="mobile-logo"><svg class="logo-mark" width="22" height="22" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="19" fill="#F25C42"></rect><rect x="13.5" y="13.5" width="37" height="37" rx="12.3" fill="#ffffff"></rect><rect x="20.9" y="20.9" width="22.2" height="22.2" rx="8.6" fill="#F25C42"></rect><rect x="26.4" y="26.4" width="11.1" height="11.1" rx="4.3" fill="#F7B12E"></rect></svg><span>askthe<span class="logo-q">qr</span></span></span>
   <button class="hamburger" id="hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
@@ -928,7 +929,10 @@
 <!-- Sidebar -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-logo">
-    <div class="logo-text">asktheqr<span class="logo-dot"></span></div>
+    <div class="logo-text">
+      <svg class="logo-mark" width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="19" fill="#F25C42"></rect><rect x="13.5" y="13.5" width="37" height="37" rx="12.3" fill="#ffffff"></rect><rect x="20.9" y="20.9" width="22.2" height="22.2" rx="8.6" fill="#F25C42"></rect><rect x="26.4" y="26.4" width="11.1" height="11.1" rx="4.3" fill="#F7B12E"></rect></svg>
+      <span>askthe<span class="logo-q">qr</span></span>
+    </div>
     <div class="sidebar-tagline">Instant item information</div>
   </div>
 

@@ -4,47 +4,50 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Item Details</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #f8f8f6;
+      --bg: #FBF7F4;
       --surface: #ffffff;
-      --border: rgba(0,0,0,0.1);
-      --text-primary: #1a1a18;
-      --text-secondary: #5f5e5a;
-      --text-muted: #888780;
-      --accent: #185fa5;
-      --accent-bg: #e6f1fb;
-      --accent-text: #0c447c;
-      --success-bg: #eaf3de;
-      --success-text: #3b6d11;
-      --danger-bg: #fcebeb;
-      --danger-text: #a32d2d;
-      --radius: 12px;
-      --radius-sm: 8px;
+      --border: rgba(33,25,19,0.12);
+      --text-primary: #211913;
+      --text-secondary: #4E3D32;
+      --text-muted: #92796A;
+      --accent: #F25C42;
+      --accent-bg: #FFF1EE;
+      --accent-text: #B2351F;
+      --success-bg: #DCF1E4;
+      --success-text: #1E7350;
+      --danger-bg: #FBE0DC;
+      --danger-text: #9E2A1F;
+      --radius: 14px;
+      --radius-sm: 9px;
     }
 
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg: #1c1c1a;
-        --surface: #262624;
-        --border: rgba(255,255,255,0.1);
-        --text-primary: #f0ede8;
-        --text-secondary: #b4b2a9;
-        --text-muted: #888780;
-        --accent: #378add;
-        --accent-bg: #042c53;
-        --accent-text: #b5d4f4;
-        --success-bg: #173404;
-        --success-text: #c0dd97;
-        --danger-bg: #501313;
-        --danger-text: #f7c1c1;
+        --bg: #1B140F;
+        --surface: #261D16;
+        --border: rgba(255,255,255,0.12);
+        --text-primary: #F5EEE8;
+        --text-secondary: #D9C9BC;
+        --text-muted: #B8A294;
+        --accent: #FB7C63;
+        --accent-bg: #4E2218;
+        --accent-text: #FFC4B6;
+        --success-bg: #173D2A;
+        --success-text: #9BD9B6;
+        --danger-bg: #4E1A14;
+        --danger-text: #F7C1C1;
       }
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-family: 'Mulish', system-ui, -apple-system, 'Segoe UI', sans-serif;
       background: var(--bg);
       color: var(--text-primary);
       min-height: 100vh;
@@ -59,16 +62,24 @@
     }
 
     .brand {
-      font-size: 15px;
-      font-weight: 500;
+      font-family: 'Mulish', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
       color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
+
+    .brand-mark { flex-shrink: 0; display: block; }
+    .brand-q { color: var(--accent); }
 
     .header-ref {
       font-size: 13px;
       color: var(--text-muted);
       margin-left: auto;
-      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-family: 'Space Mono', 'SF Mono', monospace;
     }
 
     main {
@@ -124,7 +135,7 @@
     .item-ref {
       font-size: 13px;
       color: var(--text-muted);
-      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-family: 'Space Mono', 'SF Mono', monospace;
       margin-bottom: 1.75rem;
     }
 
@@ -202,7 +213,7 @@
 <body>
 
 <header>
-  <span class="brand"><!-- asktheqr --></span>
+  <span class="brand"><svg class="brand-mark" width="24" height="24" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="19" fill="#F25C42"></rect><rect x="13.5" y="13.5" width="37" height="37" rx="12.3" fill="#ffffff"></rect><rect x="20.9" y="20.9" width="22.2" height="22.2" rx="8.6" fill="#F25C42"></rect><rect x="26.4" y="26.4" width="11.1" height="11.1" rx="4.3" fill="#F7B12E"></rect></svg><span>askthe<span class="brand-q">qr</span></span></span>
   <span class="header-ref" id="header-ref"></span>
 </header>
 
