@@ -912,6 +912,259 @@
       .order-summary { position: static; }
       .form-row { grid-template-columns: 1fr; }
     }
+
+    /* ── Order form: stepped sections ── */
+    .form-section {
+      padding-top: 1.75rem;
+      margin-top: 1.75rem;
+      border-top: 1px solid rgba(0,0,0,0.08);
+    }
+    .form-section:first-of-type {
+      padding-top: 0;
+      margin-top: 0;
+      border-top: none;
+    }
+    .form-step {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 0.5rem;
+    }
+    .form-step .step-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--amber);
+      color: var(--white);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+    }
+
+    /* Subsection within a section */
+    .form-subsection {
+      margin-top: 1.5rem;
+      padding: 1.25rem;
+      background: var(--off);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 12px;
+    }
+    .form-subsection:first-of-type { margin-top: 1rem; }
+    .subsection-title {
+      font-family: 'Mulish', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.2rem;
+    }
+    .subsection-sub {
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+    .form-subsection .form-input { background: var(--white); }
+
+    /* "What scanners see" callout */
+    .qr-callout {
+      display: flex;
+      gap: 0.65rem;
+      align-items: flex-start;
+      background: rgba(247,177,46,0.12);
+      border: 1px solid rgba(247,177,46,0.4);
+      border-radius: 10px;
+      padding: 0.75rem 0.85rem;
+      margin-bottom: 1.1rem;
+    }
+    .qr-callout svg { width: 17px; height: 17px; stroke: var(--gold); fill: none; stroke-width: 2; flex-shrink: 0; margin-top: 1px; }
+    .qr-callout p { font-size: 12.5px; line-height: 1.5; color: var(--navy); }
+    .qr-callout strong { font-weight: 700; }
+
+    /* Preview caption (mono utility face) */
+    .preview-caption {
+      font-family: 'Space Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 1.1rem 0 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .preview-caption::before {
+      content: "";
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--amber);
+      flex-shrink: 0;
+    }
+
+    /* ── Label preview — rendered at true 60 × 20 mm ── */
+    .label-preview-stage {
+      display: flex;
+      justify-content: center;
+      padding: 1.4rem 0.75rem;
+      background:
+        repeating-linear-gradient(45deg, rgba(0,0,0,0.025) 0 10px, transparent 10px 20px),
+        var(--white);
+      border: 1px dashed rgba(0,0,0,0.15);
+      border-radius: 10px;
+    }
+    .label-preview {
+      width: min(60mm, 100%);
+      aspect-ratio: 60 / 20;
+      container-type: inline-size;
+      background: var(--white);
+      border-radius: 2.33cqw;
+      box-shadow: 0 2px 8px rgba(33,25,19,0.18), 0 0 0 1px rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      gap: 2.67cqw;
+      padding: 1.6cqw 3cqw;
+      overflow: hidden;
+    }
+    .label-name-block {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.3cqw;
+    }
+    .label-name {
+      font-family: 'Mulish', sans-serif;
+      font-weight: 800;
+      font-size: 7.3cqw;
+      line-height: 1.05;
+      color: var(--navy);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .label-name.placeholder { color: rgba(33,25,19,0.28); font-weight: 700; }
+    .label-scan {
+      font-family: 'Space Mono', monospace;
+      font-size: 3.8cqw;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--amber);
+      display: flex;
+      align-items: center;
+      gap: 1.3cqw;
+    }
+    .label-qr {
+      width: 31.7cqw;
+      aspect-ratio: 1;
+      flex-shrink: 0;
+    }
+    .label-qr svg { width: 100%; height: 100%; display: block; }
+
+    /* ── QR landing-page preview (phone mock) ── */
+    .landing-stage {
+      display: flex;
+      justify-content: center;
+      padding: 1.25rem 0.75rem;
+      background: var(--navy);
+      border-radius: 14px;
+    }
+    .phone {
+      width: min(240px, 100%);
+      background: #0d0a08;
+      border-radius: 30px;
+      padding: 9px;
+      box-shadow: 0 12px 34px rgba(0,0,0,0.4);
+    }
+    .phone-screen {
+      background: var(--off);
+      border-radius: 22px;
+      overflow: hidden;
+      min-height: 360px;
+    }
+    .phone-notch {
+      height: 18px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .phone-notch::after {
+      content: "";
+      width: 70px; height: 5px;
+      background: #0d0a08;
+      border-radius: 0 0 6px 6px;
+    }
+    .lp-header {
+      background: var(--amber);
+      padding: 0.85rem 1rem 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .lp-header .lp-logo {
+      font-family: 'Mulish', sans-serif;
+      font-weight: 800;
+      font-size: 14px;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .lp-body { padding: 1.1rem 1rem 1.4rem; }
+    .lp-name {
+      font-family: 'Mulish', sans-serif;
+      font-weight: 800;
+      font-size: 19px;
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 0.15rem;
+      word-break: break-word;
+    }
+    .lp-name.placeholder { color: rgba(33,25,19,0.3); }
+    .lp-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.9rem;
+    }
+    .lp-rows { display: flex; flex-direction: column; gap: 0.1rem; }
+    .lp-row {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+    }
+    .lp-row-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--amber);
+    }
+    .lp-row-value { font-size: 13px; color: var(--navy); font-weight: 600; word-break: break-word; }
+    .lp-note {
+      margin-top: 0.9rem;
+      background: var(--navy);
+      border-radius: 10px;
+      padding: 0.7rem 0.8rem;
+    }
+    .lp-note .lp-row-label { color: var(--gold); margin-bottom: 3px; }
+    .lp-note .lp-note-text { font-size: 12.5px; color: rgba(255,255,255,0.85); line-height: 1.5; word-break: break-word; }
+    .lp-empty {
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.55;
+      padding: 1.5rem 0.25rem;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -1115,51 +1368,142 @@
           <div class="order-summary-total"><span>Total</span><span id="order-total-display"></span></div>
         </div>
         <div class="order-form">
-          <p class="form-heading">Your details</p>
-          <p class="form-sub">We'll use these to personalise your labels and send your order confirmation.</p>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">First name</label>
-              <input class="form-input" type="text" id="f-firstname" placeholder="Jane" />
+
+          <!-- ════ STEP 1 · Label & QR page ════ -->
+          <div class="form-section">
+            <span class="form-step"><span class="step-dot">1</span> Label &amp; QR page</span>
+            <p class="form-heading">What goes on your labels</p>
+            <p class="form-sub">Set the name printed on the label and the details people see when they scan the code.</p>
+
+            <!-- 1a · Name on the label -->
+            <div class="form-subsection">
+              <p class="subsection-title">Name on the label</p>
+              <p class="subsection-sub">Printed on every label, next to the QR code.</p>
+              <div class="form-group" style="margin-bottom:0;">
+                <label class="form-label">Name to print</label>
+                <input class="form-input" type="text" id="f-labelname" placeholder="e.g. J. Smith" oninput="updateLabelPreview()" />
+              </div>
+              <p class="preview-caption">Label preview · 60 × 20 mm</p>
+              <div class="label-preview-stage">
+                <div class="label-preview">
+                  <div class="label-name-block">
+                    <span class="label-name placeholder" id="lp-label-name">J. Smith</span>
+                    <span class="label-scan">SCAN ME
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </span>
+                  </div>
+                  <div class="label-qr" id="lp-label-qr"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 1b · QR page details -->
+            <div class="form-subsection">
+              <p class="subsection-title">QR page details</p>
+              <p class="subsection-sub">The page that opens when the code is scanned.</p>
+              <div class="qr-callout">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                <p><strong>Anyone who scans the label sees these details.</strong> Only fill in what you're happy for a stranger to see — every field except the name is optional.</p>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Name</label>
+                  <input class="form-input" type="text" id="q-name" placeholder="Jane Smith" oninput="updateLandingPreview()" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Phone <span class="form-optional">(optional)</span></label>
+                  <input class="form-input" type="tel" id="q-phone" placeholder="07700 900123" oninput="updateLandingPreview()" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email <span class="form-optional">(optional)</span></label>
+                <input class="form-input" type="email" id="q-email" placeholder="jane@example.com" oninput="updateLandingPreview()" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Address <span class="form-optional">(optional)</span></label>
+                <input class="form-input" type="text" id="q-address" placeholder="123 Example Street, Birmingham" oninput="updateLandingPreview()" />
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">School <span class="form-optional">(optional)</span></label>
+                  <input class="form-input" type="text" id="q-school" placeholder="Oakfield Primary" oninput="updateLandingPreview()" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Class <span class="form-optional">(optional)</span></label>
+                  <input class="form-input" type="text" id="q-class" placeholder="Year 3 · Oak" oninput="updateLandingPreview()" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Teacher <span class="form-optional">(optional)</span></label>
+                <input class="form-input" type="text" id="q-teacher" placeholder="Mrs Patel" oninput="updateLandingPreview()" />
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label class="form-label">Note <span class="form-optional">(optional)</span></label>
+                <textarea class="form-input form-textarea" id="q-note" placeholder="e.g. Please call if found — thank you!" oninput="updateLandingPreview()"></textarea>
+              </div>
+
+              <p class="preview-caption">What people see when they scan</p>
+              <div class="landing-stage">
+                <div class="phone">
+                  <div class="phone-screen">
+                    <div class="phone-notch"></div>
+                    <div class="lp-header">
+                      <span class="lp-logo">
+                        <svg width="18" height="18" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="19" fill="#ffffff"></rect><rect x="13.5" y="13.5" width="37" height="37" rx="12.3" fill="#F25C42"></rect><rect x="20.9" y="20.9" width="22.2" height="22.2" rx="8.6" fill="#ffffff"></rect><rect x="26.4" y="26.4" width="11.1" height="11.1" rx="4.3" fill="#F7B12E"></rect></svg>
+                        askthe<span style="opacity:0.85">qr</span>
+                      </span>
+                    </div>
+                    <div class="lp-body" id="lp-landing-body">
+                      <!-- populated by updateLandingPreview() -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════ STEP 2 · Billing & delivery ════ -->
+          <div class="form-section">
+            <span class="form-step"><span class="step-dot">2</span> Billing &amp; delivery</span>
+            <p class="form-heading">Where it's going</p>
+            <p class="form-sub">We'll use these for your order confirmation and to post your labels.</p>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">First name</label>
+                <input class="form-input" type="text" id="f-firstname" placeholder="Jane" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Last name</label>
+                <input class="form-input" type="text" id="f-lastname" placeholder="Smith" />
+              </div>
             </div>
             <div class="form-group">
-              <label class="form-label">Last name</label>
-              <input class="form-input" type="text" id="f-lastname" placeholder="Smith" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Email address</label>
-            <input class="form-input" type="email" id="f-email" placeholder="jane@example.com" />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Phone number</label>
-            <input class="form-input" type="tel" id="f-phone" placeholder="07700 900123" />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Delivery address</label>
-            <input class="form-input" type="text" id="f-address" placeholder="123 Example Street" />
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Town / City</label>
-              <input class="form-input" type="text" id="f-city" placeholder="Birmingham" />
+              <label class="form-label">Email address</label>
+              <input class="form-input" type="email" id="f-email" placeholder="jane@example.com" />
             </div>
             <div class="form-group">
-              <label class="form-label">Postcode</label>
-              <input class="form-input" type="text" id="f-postcode" placeholder="B1 1AA" />
+              <label class="form-label">Phone number</label>
+              <input class="form-input" type="tel" id="f-phone" placeholder="07700 900123" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Delivery address</label>
+              <input class="form-input" type="text" id="f-address" placeholder="123 Example Street" />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Town / City</label>
+                <input class="form-input" type="text" id="f-city" placeholder="Birmingham" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Postcode</label>
+                <input class="form-input" type="text" id="f-postcode" placeholder="B1 1AA" />
+              </div>
             </div>
           </div>
-          <div class="form-group">
-            <label class="form-label">Name to print on labels</label>
-            <input class="form-input" type="text" id="f-labelname" placeholder="e.g. J. Smith" />
-            <p class="form-hint">This is the name that will appear printed on every label.</p>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Additional notes <span class="form-optional">(optional)</span></label>
-            <textarea class="form-input form-textarea" id="f-notes" placeholder="Any special requirements..."></textarea>
-          </div>
-          <div class="form-error" id="form-error" style="display:none;"></div>
-          <button class="checkout-btn" id="checkout-btn" onclick="proceedToCheckout()">
+
+          <div class="form-error" id="form-error" style="display:none; margin-top:1.5rem;"></div>
+          <button class="checkout-btn" id="checkout-btn" onclick="proceedToCheckout()" style="margin-top:1.5rem;">
             Proceed to payment
           </button>
           <p class="checkout-note">You'll be taken to Stripe's secure payment page. We never store your card details.</p>
@@ -1240,6 +1584,80 @@
   // ── Shop state ────────────────────────────────────────────────────────────
   let currentOrder = {};
 
+  // ── Decorative QR for the label preview (the real code is generated later) ──
+  function buildFauxQR() {
+    const N = 25, q = 1, total = N + q * 2; // 1-module quiet zone
+    let seed = 0x9e3779b9;
+    const rnd = () => { seed ^= seed << 13; seed ^= seed >>> 17; seed ^= seed << 5; return ((seed >>> 0) % 1000) / 1000; };
+    const finder = (gx, gy, cells) => {
+      for (let y = 0; y < 7; y++) for (let x = 0; x < 7; x++) {
+        const edge = x === 0 || x === 6 || y === 0 || y === 6;
+        const core = x >= 2 && x <= 4 && y >= 2 && y <= 4;
+        if (edge || core) cells.push([gx + x, gy + y]);
+      }
+    };
+    const inFinder = (x, y) =>
+      (x < 7 && y < 7) || (x >= N - 7 && y < 7) || (x < 7 && y >= N - 7);
+    const cells = [];
+    finder(0, 0, cells); finder(N - 7, 0, cells); finder(0, N - 7, cells);
+    for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+      if (inFinder(x, y)) continue;
+      if (rnd() > 0.55) cells.push([x, y]);
+    }
+    const rects = cells.map(([x, y]) =>
+      `<rect x="${x + q}" y="${y + q}" width="1" height="1"/>`).join('');
+    return `<svg viewBox="0 0 ${total} ${total}" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">`
+      + `<rect width="${total}" height="${total}" fill="#fff"/>`
+      + `<g fill="#211913">${rects}</g></svg>`;
+  }
+
+  // ── Live label preview ──
+  function updateLabelPreview() {
+    const el = document.getElementById('lp-label-name');
+    const val = document.getElementById('f-labelname').value.trim();
+    if (val) { el.textContent = val; el.classList.remove('placeholder'); }
+    else { el.textContent = 'J. Smith'; el.classList.add('placeholder'); }
+  }
+
+  // ── Live QR landing-page preview ──
+  function updateLandingPreview() {
+    const v = id => document.getElementById(id).value.trim();
+    const esc = s => s.replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));
+    const name = v('q-name');
+    const rows = [
+      ['Phone', v('q-phone')],
+      ['Email', v('q-email')],
+      ['Address', v('q-address')],
+      ['School', v('q-school')],
+      ['Class', v('q-class')],
+      ['Teacher', v('q-teacher')],
+    ];
+    const note = v('q-note');
+    const body = document.getElementById('lp-landing-body');
+
+    const hasAny = name || note || rows.some(r => r[1]);
+    if (!hasAny) {
+      body.innerHTML = '<p class="lp-empty">Start filling in the details above and this is exactly how your QR page will look.</p>';
+      return;
+    }
+
+    let html = '';
+    html += `<div class="lp-name${name ? '' : ' placeholder'}">${name ? esc(name) : 'Their name'}</div>`;
+    html += `<div class="lp-eyebrow">Item information</div>`;
+    const filled = rows.filter(r => r[1]);
+    if (filled.length) {
+      html += '<div class="lp-rows">';
+      filled.forEach(([label, value]) => {
+        html += `<div class="lp-row"><span class="lp-row-label">${label}</span><span class="lp-row-value">${esc(value)}</span></div>`;
+      });
+      html += '</div>';
+    }
+    if (note) {
+      html += `<div class="lp-note"><div class="lp-row-label">Note</div><div class="lp-note-text">${esc(note)}</div></div>`;
+    }
+    body.innerHTML = html;
+  }
+
   function openOrder(productName, priceInPence, qty) {
     currentOrder = { productName, priceInPence, qty };
     const pounds = (priceInPence / 100).toFixed(2);
@@ -1250,6 +1668,9 @@
     document.getElementById('shop-catalogue').style.display = 'none';
     document.getElementById('shop-order').style.display = 'block';
     document.getElementById('shop-success').style.display = 'none';
+    document.getElementById('lp-label-qr').innerHTML = buildFauxQR();
+    updateLabelPreview();
+    updateLandingPreview();
     window.scrollTo(0, 0);
   }
 
@@ -1262,6 +1683,8 @@
 
   function validateForm() {
     const required = {
+      'f-labelname': 'Name to print on the label',
+      'q-name':      'Name on the QR page',
       'f-firstname': 'First name',
       'f-lastname':  'Last name',
       'f-email':     'Email address',
@@ -1269,7 +1692,6 @@
       'f-address':   'Delivery address',
       'f-city':      'Town / City',
       'f-postcode':  'Postcode',
-      'f-labelname': 'Name to print on labels',
     };
     for (const [id, label] of Object.entries(required)) {
       if (!document.getElementById(id).value.trim()) {
@@ -1277,7 +1699,9 @@
       }
     }
     const email = document.getElementById('f-email').value;
-    if (!/^[^@]+@[^@]+\.[^@]+$/.test(email)) return 'Please enter a valid email address.';
+    if (!/^[^@]+@[^@]+\.[^@]+$/.test(email)) return 'Please enter a valid billing email address.';
+    const qEmail = document.getElementById('q-email').value.trim();
+    if (qEmail && !/^[^@]+@[^@]+\.[^@]+$/.test(qEmail)) return 'The email on the QR page doesn\'t look valid.';
     return null;
   }
 
@@ -1295,16 +1719,32 @@
     btn.disabled = true;
     btn.textContent = 'Redirecting to payment...';
 
+    const qv = id => document.getElementById(id).value.trim();
+
     const orderData = {
       productName:  currentOrder.productName,
       price:        currentOrder.priceInPence,
       quantity:     currentOrder.qty,
-      customerEmail: document.getElementById('f-email').value.trim(),
-      customerName:  document.getElementById('f-firstname').value.trim() + ' ' + document.getElementById('f-lastname').value.trim(),
-      phone:         document.getElementById('f-phone').value.trim(),
-      address:       document.getElementById('f-address').value.trim() + ', ' + document.getElementById('f-city').value.trim() + ', ' + document.getElementById('f-postcode').value.trim(),
-      labelName:     document.getElementById('f-labelname').value.trim(),
-      notes:         document.getElementById('f-notes').value.trim(),
+      // Billing & delivery
+      customerEmail: qv('f-email'),
+      customerName:  qv('f-firstname') + ' ' + qv('f-lastname'),
+      phone:         qv('f-phone'),
+      address:       qv('f-address') + ', ' + qv('f-city') + ', ' + qv('f-postcode'),
+      // Name printed on the physical label
+      labelName:     qv('f-labelname'),
+      // Legacy key kept for compatibility — mirrors the QR note
+      notes:         qv('q-note'),
+      // Details shown on the scanned QR landing page
+      qrDetails: {
+        name:    qv('q-name'),
+        phone:   qv('q-phone'),
+        email:   qv('q-email'),
+        address: qv('q-address'),
+        school:  qv('q-school'),
+        class:   qv('q-class'),
+        teacher: qv('q-teacher'),
+        note:    qv('q-note'),
+      },
     };
 
     try {
@@ -1341,3 +1781,4 @@
 
 </body>
 </html>
+
