@@ -22,11 +22,22 @@ exports.handler = async (event) => {
   const {
     productName, price, quantity,
     customerEmail, customerName,
-    phone, address, labelName, notes
+    phone, address, labelName, notes,
+    qrDetails,
   } = body;
 
+  // QR landing-page details — default to {} so a missing object can't crash the insert.
+  // Empty optional fields are stored as NULL rather than '' for cleaner data.
+  const qr = qrDetails || {};
+  const orNull = (v) => (v && String(v).trim() ? String(v).trim() : null);
+
+  // ── Minimal server-side guard rails (front end validates too) ──
+  if (!productName || !price || !customerEmail || !labelName) {
+    return { statusCode: 400, body: JSON.stringify({ error: 'Missing required order fields' }) };
+  }
+
   try {
-    // 1. Save a pending order to Supabase
+    // 1. Save a pending order to Supabase (full order, including QR details)
     const { data: order, error: dbError } = await supabase
       .from('orders')
       .insert({
@@ -39,14 +50,22 @@ exports.handler = async (event) => {
         address:        address,
         label_name:     labelName,
         notes:          notes,
+        // QR landing-page fields
+        qr_name:        orNull(qr.name),
+        qr_phone:       orNull(qr.phone),
+        qr_email:       orNull(qr.email),
+        qr_address:     orNull(qr.address),
+        qr_school:      orNull(qr.school),
+        qr_class:       orNull(qr.class),
+        qr_teacher:     orNull(qr.teacher),
+        qr_note:        orNull(qr.note),
         status:         'pending',
       })
       .select()
       .single();
-
     if (dbError) throw dbError;
 
-    // 2. Create Stripe checkout session
+    // 2. Create Stripe checkout session — only the row ID travels through Stripe.
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       customer_email: customerEmail,
@@ -70,7 +89,7 @@ exports.handler = async (event) => {
       cancel_url:  `${process.env.SITE_URL}/`,
     });
 
-    // 3. Update the order with the Stripe session ID
+    // 3. Store the Stripe session ID against the order
     await supabase
       .from('orders')
       .update({ stripe_session_id: session.id })
@@ -80,7 +99,6 @@ exports.handler = async (event) => {
       statusCode: 200,
       body: JSON.stringify({ url: session.url }),
     };
-
   } catch (err) {
     console.error('Checkout error:', err);
     return {
