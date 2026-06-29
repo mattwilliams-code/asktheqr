@@ -1018,10 +1018,13 @@
       border: 1px dashed rgba(0,0,0,0.15);
       border-radius: 10px;
     }
-    .label-preview {
-      width: min(60mm, 100%);
-      aspect-ratio: 60 / 20;
+    .label-cq {
       container-type: inline-size;
+      width: min(60mm, 100%);
+    }
+    .label-preview {
+      width: 100%;
+      aspect-ratio: 60 / 20;
       background: var(--white);
       border-radius: 2.33cqw;
       box-shadow: 0 2px 8px rgba(33,25,19,0.18), 0 0 0 1px rgba(0,0,0,0.06);
@@ -1036,29 +1039,32 @@
       min-width: 0;
       display: flex;
       flex-direction: column;
-      gap: 1.3cqw;
+      justify-content: center;
+      gap: 0.6cqw;
     }
-    .label-name {
+    .label-cap {
+      font-family: 'Mulish', sans-serif;
+      font-weight: 700;
+      font-size: 3.6cqw;
+      line-height: 1.1;
+      color: var(--amber);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 0.4cqw;
+    }
+    .label-name-line {
       font-family: 'Mulish', sans-serif;
       font-weight: 800;
-      font-size: 7.3cqw;
-      line-height: 1.05;
+      font-size: 5.4cqw;
+      line-height: 1.04;
       color: var(--navy);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    .label-name.placeholder { color: rgba(33,25,19,0.28); font-weight: 700; }
-    .label-scan {
-      font-family: 'Space Mono', monospace;
-      font-size: 3.8cqw;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      color: var(--amber);
-      display: flex;
-      align-items: center;
-      gap: 1.3cqw;
-    }
+    .label-name-line:empty { display: none; }
+    .label-name-block.is-placeholder .label-name-line { color: rgba(33,25,19,0.28); font-weight: 700; }
     .label-qr {
       width: 31.7cqw;
       aspect-ratio: 1;
@@ -1385,14 +1391,15 @@
               </div>
               <p class="preview-caption">Label preview · 60 × 20 mm</p>
               <div class="label-preview-stage">
-                <div class="label-preview">
-                  <div class="label-name-block">
-                    <span class="label-name placeholder" id="lp-label-name">J. Smith</span>
-                    <span class="label-scan">SCAN ME
-                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-                    </span>
+                <div class="label-cq">
+                  <div class="label-preview">
+                    <div class="label-name-block is-placeholder" id="lp-name-block">
+                      <span class="label-cap">Scan to reunite me with</span>
+                      <span class="label-name-line" id="lp-label-first">Jane</span>
+                      <span class="label-name-line" id="lp-label-last">Smith</span>
+                    </div>
+                    <div class="label-qr" id="lp-label-qr"></div>
                   </div>
-                  <div class="label-qr" id="lp-label-qr"></div>
                 </div>
               </div>
             </div>
@@ -1612,11 +1619,34 @@
   }
 
   // ── Live label preview ──
+  function fitLabelLine(el) {
+    el.style.fontSize = '';                       // reset to the CSS base size
+    if (!el.textContent) return;
+    let size = parseFloat(getComputedStyle(el).fontSize);
+    let guard = 40;
+    while (el.scrollWidth > el.clientWidth && size > 7 && guard-- > 0) {
+      size -= 0.5;
+      el.style.fontSize = size + 'px';
+    }
+  }
+
   function updateLabelPreview() {
-    const el = document.getElementById('lp-label-name');
+    const block = document.getElementById('lp-name-block');
+    const firstEl = document.getElementById('lp-label-first');
+    const lastEl = document.getElementById('lp-label-last');
     const val = document.getElementById('f-labelname').value.trim();
-    if (val) { el.textContent = val; el.classList.remove('placeholder'); }
-    else { el.textContent = 'J. Smith'; el.classList.add('placeholder'); }
+    if (val) {
+      const parts = val.split(/\s+/);
+      firstEl.textContent = parts.shift();
+      lastEl.textContent = parts.join(' '); // surname(s); empty for a single name
+      block.classList.remove('is-placeholder');
+    } else {
+      firstEl.textContent = 'Jane';
+      lastEl.textContent = 'Smith';
+      block.classList.add('is-placeholder');
+    }
+    fitLabelLine(firstEl);
+    fitLabelLine(lastEl);
   }
 
   // ── Live QR landing-page preview ──
@@ -1781,4 +1811,3 @@
 
 </body>
 </html>
-
