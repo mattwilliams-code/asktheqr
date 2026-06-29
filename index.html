@@ -1039,7 +1039,7 @@
       min-width: 0;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       gap: 0.6cqw;
     }
     .label-cap {
@@ -1047,16 +1047,16 @@
       font-weight: 700;
       font-size: 3.6cqw;
       line-height: 1.1;
-      color: var(--amber);
+      color: var(--navy);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin-bottom: 0.4cqw;
+      margin-bottom: 0.6cqw;
     }
     .label-name-line {
       font-family: 'Mulish', sans-serif;
       font-weight: 800;
-      font-size: 5.4cqw;
+      font-size: 10.5cqw;
       line-height: 1.04;
       color: var(--navy);
       white-space: nowrap;
@@ -1619,14 +1619,18 @@
   }
 
   // ── Live label preview ──
-  function fitLabelLine(el) {
-    el.style.fontSize = '';                       // reset to the CSS base size
-    if (!el.textContent) return;
-    let size = parseFloat(getComputedStyle(el).fontSize);
-    let guard = 40;
-    while (el.scrollWidth > el.clientWidth && size > 7 && guard-- > 0) {
+  function fitLabelNames(firstEl, lastEl) {
+    firstEl.style.fontSize = '';
+    lastEl.style.fontSize = '';
+    let size = parseFloat(getComputedStyle(firstEl).fontSize);
+    const fits = () =>
+      firstEl.scrollWidth <= firstEl.clientWidth &&
+      lastEl.scrollWidth <= lastEl.clientWidth;
+    let guard = 80;
+    while (!fits() && size > 8 && guard-- > 0) {
       size -= 0.5;
-      el.style.fontSize = size + 'px';
+      firstEl.style.fontSize = size + 'px';
+      lastEl.style.fontSize = size + 'px';
     }
   }
 
@@ -1645,8 +1649,7 @@
       lastEl.textContent = 'Smith';
       block.classList.add('is-placeholder');
     }
-    fitLabelLine(firstEl);
-    fitLabelLine(lastEl);
+    fitLabelNames(firstEl, lastEl);
   }
 
   // ── Live QR landing-page preview ──
