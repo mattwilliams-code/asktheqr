@@ -1,6 +1,19 @@
 const Stripe = require('stripe');
 const { createClient } = require('@supabase/supabase-js');
 
+/* Server-side catalogue — the ONLY place prices are trusted.
+   The browser sends a productKey, never a price. Keep this in step with
+   the PRODUCTS object in index.html. */
+const PRODUCTS = {
+  starter:      { name: 'Starter Pack — 15 Labels',             price: 999,  qty: 15 },
+  standard:     { name: 'Standard Pack — 30 Labels',            price: 1799, qty: 30 },
+  backtoschool: { name: 'Back to School Kit — 30 Labels + Tag', price: 2299, qty: 30 },
+  value:        { name: 'Value Pack — 50 Labels',               price: 2799, qty: 50 },
+  tag:          { name: 'Luggage Tag',                          price: 399,  qty: 1  },
+  sticker10:    { name: 'Luggage Sticker — 10 × 10 cm',         price: 599,  qty: 1  },
+  sticker5:     { name: 'Laptop Sticker — 5 × 5 cm',            price: 299,  qty: 1  },
+};
+
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method not allowed' };
@@ -20,11 +33,20 @@ exports.handler = async (event) => {
   }
 
   const {
-    productName, price, quantity,
+    productKey,
     customerEmail, customerName,
     phone, address, labelName, notes,
     qrDetails,
   } = body;
+
+  // Resolve the product here rather than believing the browser.
+  const product = PRODUCTS[productKey];
+  if (!product) {
+    return { statusCode: 400, body: JSON.stringify({ error: 'Unknown product' }) };
+  }
+  const productName = product.name;
+  const price = product.price;
+  const quantity = product.qty;
 
   // QR landing-page details — default to {} so a missing object can't crash the insert.
   // Empty optional fields are stored as NULL rather than '' for cleaner data.
@@ -32,8 +54,11 @@ exports.handler = async (event) => {
   const orNull = (v) => (v && String(v).trim() ? String(v).trim() : null);
 
   // ── Minimal server-side guard rails (front end validates too) ──
-  if (!productName || !price || !customerEmail || !labelName) {
+  if (!customerEmail || !labelName) {
     return { statusCode: 400, body: JSON.stringify({ error: 'Missing required order fields' }) };
+  }
+  if (String(labelName).length > 50) {
+    return { statusCode: 400, body: JSON.stringify({ error: 'Printed text is too long' }) };
   }
 
   try {
@@ -74,7 +99,7 @@ exports.handler = async (event) => {
           currency: 'gbp',
           product_data: {
             name: productName,
-            description: `Personalised QR labels — printed for ${labelName}`,
+            description: `Printed for ${labelName}`,
           },
           unit_amount: price,
         },
