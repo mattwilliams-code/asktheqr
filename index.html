@@ -1916,6 +1916,9 @@
     document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
     document.getElementById('page-' + id).classList.add('active');
     if (navEl) navEl.classList.add('active');
+    // Any page switch resets the shop to the catalogue. Coming back to a
+    // half-filled order form you'd walked away from is never what you wanted.
+    showCatalogue();
     closeSidebar();
     window.scrollTo(0, 0);
   }
@@ -2302,14 +2305,14 @@
     }
   }
 
-  // Show success page if redirected back from Stripe
+  // Show success page if redirected back from Stripe.
+  // showPage() resets the shop to the catalogue, so switch to success after it,
+  // not on a timer racing against it.
   if (window.location.search.includes('success=true')) {
     showPage('shop', document.querySelectorAll('.nav-link')[1]);
-    setTimeout(() => {
-      document.getElementById('shop-catalogue').style.display = 'none';
-      document.getElementById('shop-order').style.display = 'none';
-      document.getElementById('shop-success').style.display = 'block';
-    }, 100);
+    document.getElementById('shop-catalogue').style.display = 'none';
+    document.getElementById('shop-order').style.display = 'none';
+    document.getElementById('shop-success').style.display = 'block';
   }
 
 </script>
