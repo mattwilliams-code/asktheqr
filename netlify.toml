@@ -4,6 +4,17 @@
 [build.environment]
   SECRETS_SCAN_OMIT_PATHS = "item-page.html"
 
+# Customer QR pages hold personal details: keep them out of search engines.
+[[headers]]
+  for = "/items/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive"
+
+[[headers]]
+  for = "/item-page.html"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive"
+
 [[redirects]]
   from = "/items/*"
   to = "/item-page.html"
