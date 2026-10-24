@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Customer QR pages (/items/...) are deliberately NOT blocked here:
+# they carry a noindex tag, and search engines must be able to crawl
+# them to see it. Blocking them would let bare URLs appear in results.
+
+Sitemap: https://asktheqr.com/sitemap.xml
